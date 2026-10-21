@@ -9,7 +9,6 @@ final class RescueModel: ObservableObject {
     @Published var message = "먼저 현재 연결 상태를 확인하세요."
     @Published var messageIsError = false
     @Published var hasRestarted = false
-    @Published var userConfirmed = false
     @Published var launchRecheckPending = false
     @Published var launchRechecking = false
     private let launchCheck = LaunchStatusCheck()
@@ -36,7 +35,6 @@ final class RescueModel: ObservableObject {
         let result = await Task.detached { Diagnostics.collect() }.value
         snapshot = result
         busy = false
-        if result.connectedMice.isEmpty { userConfirmed = false }
         if !messageIsError {
             if !result.errors.isEmpty {
                 message = "상태를 완전히 확인하지 못했습니다. 상태 다시 확인을 누르거나 시스템 설정의 Bluetooth에서 확인해 주세요."
@@ -57,7 +55,6 @@ final class RescueModel: ObservableObject {
         userActionRevision += 1
         busy = true
         hasRestarted = false
-        userConfirmed = false
         messageIsError = false
         message = "macOS 관리자 인증을 기다립니다. 인증 뒤 연결 상태를 확인합니다."
         let result = await Task.detached { () -> Result<(RestartVerification, Snapshot), Error> in
@@ -100,7 +97,6 @@ struct ContentView: View {
     @AppStorage("appLanguage") private var language = AppLanguage.initialDefault
     private func t(_ source: String) -> String { L10n.text(source, language: language) }
     private var mice: [MouseDevice] { model.snapshot?.bluetooth?.mice ?? [] }
-    private var connected: Bool { !(model.snapshot?.connectedMice.isEmpty ?? true) }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -181,26 +177,23 @@ struct ContentView: View {
                 Spacer()
             }
             HStack(alignment: .top, spacing: 9) {
-                Image(systemName: model.userConfirmed ? "checkmark.circle.fill" : "info.circle")
-                Text(t(model.userConfirmed ? "사용자가 포인터와 스크롤의 정상 작동을 확인했습니다." : model.message))
+                Image(systemName: "info.circle")
+                Text(t(model.message))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .font(.callout)
-            .foregroundStyle(model.messageIsError ? Color.orange : (model.userConfirmed ? Color.green : Color.secondary))
-            if connected {
-                Toggle(t("포인터와 스크롤이 정상 작동합니다"), isOn: $model.userConfirmed)
-                    .toggleStyle(.checkbox).disabled(model.busy)
-            }
+            .foregroundStyle(model.messageIsError ? Color.orange : Color.secondary)
             Divider()
             HStack {
-                Text("0.2.0 · " + t("macOS 13 이상")).font(.caption).foregroundStyle(.tertiary)
+                Text("0.2.1 · " + t("macOS 13 이상")).font(.caption).foregroundStyle(.tertiary)
                 Spacer()
                 Button(t("진단 요약 복사")) {
                     guard let state = model.snapshot else { return }
                     NSPasteboard.general.clearContents()
-                    let result = state.shareableSummary + "\nUser confirmed operation: \(model.userConfirmed)"
-                    NSPasteboard.general.setString(result, forType: .string)
+                    NSPasteboard.general.setString(state.shareableSummary, forType: .string)
                 }.buttonStyle(.link).disabled(model.snapshot == nil || model.busy)
+                Button(t("앱 닫기")) { NSApplication.shared.terminate(nil) }
+                    .disabled(model.busy)
             }
         }
         .padding(28).frame(width: 650)

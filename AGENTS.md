@@ -51,4 +51,4 @@ Inspect the native UI after changing layout. Test authentication cancellation an
 - Test Intel and older supported macOS hardware.
 - Test Administrator vs Standard User authorization, cancellation, service missing, Bluetooth off and delayed relaunch.
 - Preserve immediate Korean/English switching and persisted selection. Korean is always the first-launch default. Explain BTLEServer as handling Bluetooth LE features, and warn in the UI and README about potential interruptions to other Bluetooth keyboards/devices.
-- Public v0.2.0 uses MIT and io.github.dhckdgjs.BluetoothMouseRescue. It is ad hoc signed and must clearly disclose that it is not notarized. Future Developer ID releases need signing, notarization and a downloaded-copy test.
+- Public v0.2.1 uses MIT and io.github.dhckdgjs.BluetoothMouseRescue. It is ad hoc signed and must clearly disclose that it is not notarized. Future Developer ID releases need signing, notarization and a downloaded-copy test.

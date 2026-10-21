@@ -1,12 +1,12 @@
 # Validation record
 
-Date: 2026-10-21 (Asia/Seoul). Release: v0.2.0.
+Date: 2026-10-21 (Asia/Seoul). Release: v0.2.1.
 
 ## Incident evidence versus app testing
 
 The prior incident record reports recovery after the user executed `sudo killall -9 BTLEServer`: a new process, connected MX Anywhere 3S, HID registration and user-confirmed pointer operation. That is evidence for the intervention on that host, not proof of every path in this app or a permanent fix.
 
-## v0.2.0 checks performed
+## v0.2.0 baseline checks
 
 - Build environment: Apple Silicon, macOS 26.7.1, Swift 6.4, macOS SDK 27.0. Deployment target: macOS 13.0.
 - `swift run RescueChecks`: 11 groups passed. Coverage includes report filtering/privacy; off/unknown/malformed reports; optional battery; PID replacement; subprocess output/nonzero status/timeout; exactly one delayed startup recheck; no duplicate startup reads; a user action superseding the recheck; cancellation; a synthetic disconnected report followed by a fresh connected report; Korean default and all 43 English translations.
@@ -20,9 +20,16 @@ The prior incident record reports recovery after the user executed `sudo killall
 - No repair button was pressed during these read-only checks. Bluetooth services and pairing were not intentionally changed.
 - Release ZIP checksum verified; source/binary scans checked for personal home/workspace paths, credentials and raw identifiers before publication.
 
+## v0.2.1 follow-up checks
+
+- Removed the self-reported operation checkbox and summary flag; added a localized Quit app button.
+- Re-ran all 11 check groups (42 translations), rebuilt both architectures, verified signing and ZIP checksum, and ran the read-only bundled diagnostic successfully.
+- Inspected Korean/English UI, confirmed no checkbox and the localized exit button. Clicked Quit app and verified that the v0.2.1 app process terminated.
+- Rechecked the final ZIP against the built executable and bundled MIT notice; no private home paths remained in the executable.
+
 ## Not yet verified
 
-- A real administrator-authenticated repair through v0.2.0, administrator-prompt cancellation end-to-end, or Standard User authentication.
+- A real administrator-authenticated repair through v0.2.1, administrator-prompt cancellation end-to-end, or Standard User authentication.
 - Intel hardware, every macOS version from 13 onward, multiple BLE accessories or first launch on a different Mac.
 - Developer ID signing, Apple notarization or downloaded/quarantined-app behavior on a clean Mac.
 - The initiating Apple service defect, long-term recurrence or a permanent fix.

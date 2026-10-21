@@ -112,7 +112,7 @@ public struct Snapshot: Sendable {
         // Deliberately omit local user/device names, MACs, serials and raw system logs.
         let power = bluetooth?.poweredOn.map { $0 ? "on" : "off" } ?? "unknown"
         return """
-        Bluetooth Mouse Rescue 0.2.0
+        Bluetooth Mouse Rescue 0.2.1
         macOS: \(ProcessInfo.processInfo.operatingSystemVersionString)
         Bluetooth: \(power)
         BTLEServer running: \(!servicePIDs.isEmpty)

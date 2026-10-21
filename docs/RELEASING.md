@@ -3,9 +3,9 @@
 ## Current state
 
 - Public repository: https://github.com/dhckdgjs/BluetoothMouseRescue
-- Version: 0.2.0. Bundle identifier: `io.github.dhckdgjs.BluetoothMouseRescue`.
+- Version: 0.2.1. Bundle identifier: `io.github.dhckdgjs.BluetoothMouseRescue`.
 - MIT license explicitly selected by the maintainer on 2026-10-21.
-- No valid Developer ID signing identity is installed on the build machine. The v0.2.0 release uses ad hoc signing and is not notarized. Gatekeeper may block a downloaded copy.
+- No valid Developer ID signing identity is installed on the build machine. The v0.2.1 release uses ad hoc signing and is not notarized. Gatekeeper may block a downloaded copy.
 
 ## Build and validate
 
@@ -25,14 +25,14 @@ The maintainer must own an Apple Developer ID Application certificate and config
 
 ```sh
 SIGNING_IDENTITY='Developer ID Application: YOUR ACTUAL IDENTITY' bash scripts/build.sh
-xcrun notarytool submit dist/Bluetooth-Mouse-Rescue-0.2.0.zip \
+xcrun notarytool submit dist/Bluetooth-Mouse-Rescue-0.2.1.zip \
   --keychain-profile YOUR_LOCAL_NOTARY_PROFILE --wait
 xcrun stapler staple "dist/Bluetooth Mouse Rescue.app"
 xcrun stapler validate "dist/Bluetooth Mouse Rescue.app"
 codesign --verify --strict --verbose=2 "dist/Bluetooth Mouse Rescue.app"
 spctl --assess --type execute --verbose=2 "dist/Bluetooth Mouse Rescue.app"
-ditto -c -k --sequesterRsrc --keepParent "dist/Bluetooth Mouse Rescue.app" dist/Bluetooth-Mouse-Rescue-0.2.0.zip
-shasum -a 256 dist/Bluetooth-Mouse-Rescue-0.2.0.zip > dist/Bluetooth-Mouse-Rescue-0.2.0-SHA256SUMS.txt
+ditto -c -k --sequesterRsrc --keepParent "dist/Bluetooth Mouse Rescue.app" dist/Bluetooth-Mouse-Rescue-0.2.1.zip
+shasum -a 256 dist/Bluetooth-Mouse-Rescue-0.2.1.zip > dist/Bluetooth-Mouse-Rescue-0.2.1-SHA256SUMS.txt
 ```
 
 These are templates, not a claim that signing or notarization has happened. Submit only after the user authorizes publication/upload. Inspect the notary log if any step fails. Rebuild/re-sign after source or plist changes; regenerate the ZIP after stapling. Test a downloaded copy on a different Mac, not just the development checkout.

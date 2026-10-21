@@ -42,13 +42,15 @@ sudo killall -9 BTLEServer
 4. `연결됨`으로 표시되면 포인터·스크롤을 직접 시험합니다. 정상이라면 복구 버튼을 누를 필요가 없습니다.
 5. 문제가 계속되면 **마우스 연결 복구**를 누르고 macOS 관리자 인증을 완료합니다. 필요하면 같은 채널에서 마우스를 껐다 켠 뒤 **상태 다시 확인**을 누릅니다.
 
+확인이 끝나면 **앱 닫기**로 종료합니다. 정상 작동 여부를 체크하는 자기 확인란은 두지 않습니다.
+
 자동 재확인을 기다리는 동안 직접 상태 확인이나 복구를 시작하면 그 작업을 우선하고 예약된 재확인은 생략합니다. 페어링 여부만으로 연결됨을 표시하지 않으며, 실제 시스템 조회 결과를 사용합니다. **서비스 재시작 / Bluetooth 연결 / 실제 포인터·스크롤 작동은 별도로 확인**합니다.
 
 **다른 Bluetooth 키보드와 기기도 영향을 받아 일시적으로 연결이 끊기거나 작동이 중단될 수 있습니다.** 복구 전에 내장 키보드·트랙패드 등 다른 조작 수단을 확보하세요. 앱을 계속 켜 둘 필요는 없으며 상주 도우미나 자동 실행 항목을 설치하지 않습니다.
 
 ### 배포와 검증 범위
 
-현재 **v0.2.0은 ad hoc 서명된 미공증 빌드**입니다. Developer ID 서명과 Apple 공증은 없어 다른 Mac에서 Gatekeeper가 실행을 차단하거나 별도 실행 승인을 요구할 수 있습니다. macOS 보안 기능을 끄는 방식은 권장하지 않습니다.
+현재 **v0.2.1은 ad hoc 서명된 미공증 빌드**입니다. Developer ID 서명과 Apple 공증은 없어 다른 Mac에서 Gatekeeper가 실행을 차단하거나 별도 실행 승인을 요구할 수 있습니다. macOS 보안 기능을 끄는 방식은 권장하지 않습니다.
 
 Apple Silicon에서 빌드·진단·UI를 확인했습니다. Intel 바이너리는 크로스 빌드했으며 Intel 실기기, macOS 13 이상 모든 버전, 다른 Mac의 최초 실행 문제 해소는 아직 실기기 검증하지 않았습니다. 기존 명령의 복구 성공과 앱 내부 관리자 인증을 통한 복구 검증은 구분합니다. [검증 기록](docs/VALIDATION.md)
 
@@ -71,9 +73,11 @@ The macOS `man BTLEServer` manual describes it as a process handling Bluetooth L
 3. The app reads status, then **automatically reads it once more two seconds after the first check finishes**. This accommodates a connection report that may arrive late on another Mac. It never repairs automatically. A manual refresh or repair supersedes the delayed read.
 4. If the mouse is connected, test the pointer and scrolling. Otherwise, use **Repair connection** and authenticate through macOS when the problem persists.
 
+When finished, use **Quit app**. There is no self-reported operation checkbox.
+
 The only privileged operation is `/usr/bin/killall -9 BTLEServer`. macOS manages the service's relaunch. Pairing data is preserved. **Other Bluetooth keyboards and devices may also be affected: connections or operation may be interrupted temporarily.** Have a built-in keyboard, trackpad or another way to control your Mac available before repairing. Service restart, Bluetooth connection and working pointer input are separate confirmations.
 
-**v0.2.0 is ad hoc signed, without Developer ID signing or Apple notarization.** Gatekeeper may block a downloaded copy. The app targets macOS 13+ and includes arm64 and x86_64; Intel hardware, all older macOS versions and first launch on another Mac remain unverified. See [validation](docs/VALIDATION.md) and [release guidance](docs/RELEASING.md).
+**v0.2.1 is ad hoc signed, without Developer ID signing or Apple notarization.** Gatekeeper may block a downloaded copy. The app targets macOS 13+ and includes arm64 and x86_64; Intel hardware, all older macOS versions and first launch on another Mac remain unverified. See [validation](docs/VALIDATION.md) and [release guidance](docs/RELEASING.md).
 
 ## Build from source / 소스 빌드
 
@@ -88,8 +92,8 @@ Outputs:
 
 ```text
 dist/Bluetooth Mouse Rescue.app
-dist/Bluetooth-Mouse-Rescue-0.2.0.zip
-dist/Bluetooth-Mouse-Rescue-0.2.0-SHA256SUMS.txt
+dist/Bluetooth-Mouse-Rescue-0.2.1.zip
+dist/Bluetooth-Mouse-Rescue-0.2.1-SHA256SUMS.txt
 ```
 
 Default: Universal arm64 + x86_64. For arm64 only: `ARCHS=arm64 bash scripts/build.sh`.
@@ -104,4 +108,4 @@ Read-only diagnostics (no administrator prompt or repair):
 
 No app network requests, analytics, password collection or persistent root helper. The UI displays mouse names, connection and battery. Copied diagnostics omit names, MAC addresses, serial numbers and raw logs; their stable technical format is English in both UI languages. The clipboard changes only when **Copy diagnostics / 진단 요약 복사** is clicked. [Security and privacy](SECURITY.md)
 
-[MIT License](LICENSE) · [Changes in v0.2.0](docs/RELEASE-0.2.0.md)
+[MIT License](LICENSE) · [Changes in v0.2.1](docs/RELEASE-0.2.1.md)
