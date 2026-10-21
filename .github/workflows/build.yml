@@ -1,0 +1,19 @@
+name: Build and test
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  macos:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test without touching Bluetooth services
+        run: swift run RescueChecks
+      - name: Build universal app (ad hoc signature)
+        run: bash scripts/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Bluetooth-Mouse-Rescue-unsigned-distribution
+          path: |
+            dist/*.zip
+            dist/*-SHA256SUMS.txt
