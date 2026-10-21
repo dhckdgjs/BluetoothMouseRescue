@@ -11,6 +11,7 @@ Bluetooth 마우스가 보이지만 연결·입력이 되지 않을 때, macOS�
 ### 증상과 원인 파악
 
 이 앱은 **Logitech MX Anywhere 3S에서 연결 불량 증상을 심하게 겪은 실제 사용 사례**에서 만들었습니다. 이 설명은 해당 사용자·Mac의 경험이며, 모든 MX Anywhere 3S의 결함이나 발생 빈도를 입증하는 것은 아닙니다.
+Logitech MX Anywhere 3S 새로 사면서 체크하다보니 3개까지 구입했습니다 :)
 
 - 잘 쓰던 마우스가 갑자기 연결되지 않거나, 기기는 검색되지만 연결·페어링이 끝나지 않았습니다.
 - 사용자 경험상 **재부팅은 잠시만 효과가 있었고**, 다시 문제가 생겼습니다.
@@ -59,6 +60,7 @@ Apple Silicon에서 빌드·진단·UI를 확인했습니다. Intel 바이너리
 ### Why this exists
 
 This app grew out of a user's **severe recurring connection problems with a Logitech MX Anywhere 3S**. This is an account of that user's Mac and devices, not evidence of a defect or failure rate across all units.
+I ended up buying three Logitech MX Anywhere 3S mice while trying to figure out why the one I bought recently BT failure :)
 
 The mouse was discoverable but would not become a usable input device. The user reports that **rebooting helped only temporarily**, and **pairing again, including forgetting the device and re-pairing, did not resolve the problem**. Restarting `bluetoothd`, toggling Bluetooth and changing channels also failed during diagnosis. Deleting every Bluetooth device or resetting preference plists is inconvenient because of the setup it disrupts; this app avoids those broad resets.
 
